@@ -6,7 +6,7 @@ async function add(person) {
 
 async function update(person) {
   console.log(person)
-  return PersonModel.findOne({ id: person.id }, function (err, doc) {
+  return PersonModel.findOne({ id: person.id }, (err, doc) => {
     if (err) {
       console.log('there was an error updating the Person')
     }
@@ -14,6 +14,8 @@ async function update(person) {
     doc.save()
   })
 }
+
+//only ever soft delete a person
 
 module.exports = {
   add,
