@@ -4,14 +4,12 @@ async function add(person) {
   return PersonModel.create(person)
 }
 
-async function update(person) {
-  console.log(person)
-  return PersonModel.findOne({ id: person.id }, (err, doc) => {
+async function update(personId, person) {
+  console.log("person:", personId, person)
+  return PersonModel.findOneAndUpdate({ _id: personId }, person, (err) => {
     if (err) {
       console.log('there was an error updating the Person')
     }
-    doc.name = person.name
-    doc.save()
   })
 }
 

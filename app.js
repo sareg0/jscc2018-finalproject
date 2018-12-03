@@ -24,8 +24,9 @@ app.post('/person', async (req, res) => {
 })
 
 app.put('/person/:id', async (req, res) => {
-  await PersonService.update(req.body)
+  const person = await PersonService.update(req.params.id, req.body)
   console.log('person was updated')
+  res.send(person)
 })
 
 //TRANSACTION ENDPOINTS
