@@ -4,12 +4,9 @@ async function add(person) {
   return PersonModel.create(person)
 }
 
-async function update(personId, person) {
-  console.log("person:", personId, person)
+function update(personId, person) {
   return PersonModel.findOneAndUpdate({ _id: personId }, person, (err) => {
-    if (err) {
-      console.log('there was an error updating the Person')
-    }
+    // if (err) { return err.message }
   })
 }
 

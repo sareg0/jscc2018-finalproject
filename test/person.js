@@ -1,8 +1,7 @@
 import test from 'ava'
-// import request from 'supertest'
-// import app from '../app'
-const request = require('supertest')
-const app = require('../app.js')
+import request from 'supertest'
+import app from '../app'
+
 const PersonModel = require('../models/person')
 const mongoose = require('mongoose')
 
@@ -24,11 +23,18 @@ test('update a person', async t => {
     .put(`/person/${person.id}`)
     .send({ name: 'Fancy McFirston' })
 
-  console.log(res.body)
   t.is(res.status, 200)
   t.is(res.body.name, 'Fancy McFirston')
   const reloadedPerson = await PersonModel.findOne({ _id: person.id })
   t.is(reloadedPerson.name, res.body.name)
+})
+
+test('try update a person that doesn\'t exist', async t => {
+  const res = await request(app)
+    .put(`/person/not-right`)
+    .send({ name: 'Fancy McFirston' })
+
+  t.is(res.status, 404)
 })
 
 test.after.always('cleanup', t => {

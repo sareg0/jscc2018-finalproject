@@ -6,7 +6,7 @@ async function add(category) {
 
 async function update(id, name) {
   return CategoryModel.findByIdAndUpdate(id, { name: name }, (err) => {
-    if (err) { console.log('there was an error updating the category') }
+    // if (err) { console.log('there was an error updating the category') }
   })
 }
 

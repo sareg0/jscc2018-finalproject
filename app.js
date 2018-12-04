@@ -23,42 +23,65 @@ app.post('/person', async (req, res) => {
   res.send(person)
 })
 
+//better error handling/auth needed
 app.put('/person/:id', async (req, res) => {
-  const person = await PersonService.update(req.params.id, req.body)
-  console.log('person was updated')
-  res.send(person)
+  try {
+    const person = await PersonService.update(req.params.id, req.body)
+    console.log('person was updated')
+    res.send(person)
+  } catch (err) {
+    res.status(404)
+    res.send({message: 'not found'})
+  }
 })
 
 //TRANSACTION ENDPOINTS
 app.post('/transaction', async (req, res) => {
   const transaction = await TransactionService.add(req.body)
   res.send(transaction)
-  console.log('transaction was created')
 })
 // axios.post('/transaction', { amount: 5, category: "5c0409baf24537b6e4fb9fe0", date: Date.now(), owner: "5c03f70290a6edae96a00efc" })
 
 //need to secure the following endpoint
 app.put('/transaction/:id', async (req, res) => {
-  await TransactionService.update(req.params.id, req.body)
-  console.log('transaction was updated')
+  try {
+    const transaction = await TransactionService.update(req.params.id, req.body)
+    res.send(transaction)
+  } catch (err) {
+    res.send(err.message)
+  }
 })
 
 //need to secure the following endpoint
 app.delete('/transaction/:id', async (req, res) => {
-  await TransactionService.findRecordAndDelete(req.params.id)
-  console.log('transaction was deleted')
+  try {
+    await TransactionService.findRecordAndDelete(req.params.id)
+    console.log('transaction was deleted')
+  } catch (err) {
+    console.log('')
+    res.send(err.message)
+  }
 })
 
 //CATEGORY ENDPOINTS
 app.post('/category', async (req, res) => {
-  const category = await CategoryService.add(req.body)
-  res.send(category)
-  console.log('category was created')
+  try {
+    const category = await CategoryService.add(req.body)
+    res.send(category)
+  } catch (err) {
+    res.status(422)
+    res.send(err.message)
+  }
 })
 
 app.put('/category/:id', async (req, res) => {
-  await CategoryService.update(req.params.id, req.body.name)
-  console.log('category was updated')
+  try {
+    const category = await CategoryService.update(req.params.id, req.body.name)
+    res.send(category)
+  } catch (err) {
+    res.status(422)
+    res.send(err.message)
+  }
 })
 
 //delete a category
