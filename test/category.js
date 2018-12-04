@@ -47,6 +47,6 @@ test('try update a category that doesn\'t exist', async t => {
   t.is(res.status, 422)
 })
 
-// test.after.always('cleanup', t => {
-//   mongoose.connection.dropCollection('people')
-// });
+test.after.always('cleanup', t => {
+  mongoose.connection.dropCollection('categories')
+})
