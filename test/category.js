@@ -28,7 +28,6 @@ test('create a new category without required fields', async t => {
 test('update a category', async t => {
   const category = await CategoryModel.create({ name: 'Savings' })
 
-  console.log(category)
   const res = await request(app)
     .put(`/category/${category.id}`)
     .send({ name: 'Moar Savings' })
